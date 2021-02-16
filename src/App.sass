@@ -1,20 +1,38 @@
-$verde1: #23D962
-$verde2: #1c8c38
-$verde3: #195929
-$verde4: #0DF205
-$preto: #1E1E1E
+@font-face
+    src: url("./fonts/product_sans_regular.woff2") format("woff2")
+    font-family: "Product Sans"
+    font-weight: 400
 
+@font-face
+    src: url("./fonts/product_sans_bold.woff2") format("woff2")
+    font-family: "Product Sans"
+    font-weight: 800
+
+$primary: #497AA6
+$secondary: #333333
+$warning: #1C2F40
+$success: #3E688C
+$dark: #121212
+$light: #F2F2EB
+
+$btn-white-space: nowrap
 $enable-rounded: false
-$body-bg: $preto
-$body-color: #FFFFFF
+$enable-shadows: false
+$enable-pointer-cursor-for-buttons: false
+$enable-responsive-font-sizes: true
+$body-bg: $dark
+$body-color: $light
 
 @import '../node_modules/bootstrap/scss/bootstrap'
 
 body
-	font-family: Tahoma, sans-serif
+	font-family: "Product Sans"
 	font-size: 8pt
 a
-	color: #ffffff
+	color: $light
+	text-decoration: none
+strong
+	font-weight: 800
 
 .main-title
 	text-align: center
@@ -23,11 +41,7 @@ a
 	font-weight: 100
 
 .form-control
-	color: $preto !important
+	color: $dark !important
 
-.loading
-	position: absolute
-	top: 50%
-	left: 50%
-	z-index: 1000
-	transform: translate(-50%, -50%)
+.active
+	color: $dark !important

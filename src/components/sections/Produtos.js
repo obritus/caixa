@@ -1,6 +1,8 @@
 import React from 'react'
-import { Spinner, Container, Table } from 'reactstrap'
-import api from '../api'
+import { Link } from 'react-router-dom'
+import { Container, Card } from 'reactstrap'
+import api from '../../api'
+import CardGrid from '../CardGrid'
 
 export default class extends React.Component {
 	constructor(props){
@@ -56,27 +58,18 @@ export default class extends React.Component {
 					</form>
 				</div>
 				<div className="pt-3">
-					<Table striped>
-						<thead>
-							<tr>
-								<th>Produto</th>
-								<th>Preço</th>
-								<th>Categoria</th>
-								<th>Marca</th>
-							</tr>
-						</thead>
-						<tbody>
-					{	isLoading ? <Spinner className="loading" style={{ width: '3rem', height: '3rem' }} />
+					{	isLoading ? <p>Carregando...</p>
 						: produtos.map(data =>
-							<tr>
-								<td>{data.produto}</td>
-								<td>R$ {data.price.toString().replace(".", ',')}</td>
-								<td>{data.categoria}</td>
-								<td>{data.marca}</td>
-							</tr>
+							<Card color="secondary" className="mb-1" key={data.id}>
+								<CardGrid>
+									<p><strong><Link to={`produtos/${data.id}`}>{data.produto}</Link></strong></p>
+									<p>R$ {data.price.toString().replace(".", ',')}</p>
+									<p title="Estoque">{data.estoque}</p>
+									<p title="Categoria">{data.categoria}</p>
+									<p title="Marca">{data.marca}</p>
+								</CardGrid>
+							</Card>
 					)}
-						</tbody>
-					</Table>
 				</div>
 			</Container>
 		)

@@ -16,6 +16,10 @@ export const Footer = styled.footer`
 		grid-template-columns: 1fr 1fr;
 		p {
 			padding: 3px 5px;
+			svg {
+				vertical-align: text-top;
+				padding-right: 2pt;
+			}
 		}
 		p:first-child {
 			border-right: 1px solid rgba(255,255,255,0.1);

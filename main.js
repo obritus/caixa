@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const knex = require('./db')
 
 const set_configs = () => {
 	const fs = require('fs')
@@ -11,45 +12,41 @@ const set_configs = () => {
 
 const createWindow = () => {
 	const win = new BrowserWindow({
-		fullscreen: true,
+		fullscreen: false,
+		width: 1280,
+		height: 768,
+		backgroundColor: '#121212',
+		contextIsolation: true,
+		frame: false,
+		transparent: true,
+		icon: __dirname + 'public/favicon.ico',
 		webPreferences: {
 			nodeIntegration: true,
+			preload: __dirname + '/src/preload.js'
 		}
 	})
 	const contents = win.webContents
 	contents.openDevTools()
-	const isMac = process.platform === 'darwin'
-	const template = [
-		{
-			label: 'Arquivo',
-			submenu: [
-				{
-					label: 'Configurações',
-					click: () => {
-						win.send('open_config')
-					}
-				},
-				isMac ? { role: 'close', label: 'Sair' } : { role: 'quit', label: 'Sair' },
-			]
-		},
-		{
-			label: 'Ajuda',
-			submenu: [
-				{
-					label: 'Teste',
-					click: async () => {
-						const { shell } = require('electron')
-						await shell.beep()
-					}
-				}
-			]
-		}
-	]
-	
-	const menu = Menu.buildFromTemplate(template)
-	Menu.setApplicationMenu(menu)
 
-	win.loadURL('http://localhost:3000/')	
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------	
+
+	ipcMain.on('api', async (event, arg) => {
+		const marcas = require('./api/marcas')
+		marcas.get().then(response => {
+			event.sender.send('api-response', response)
+		}).catch(err => {
+			console.error(err)
+		})
+	})
+
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
+	Menu.setApplicationMenu(null)
+	win.loadURL('http://localhost:3000/')
+	// win.loadFile('./build/index.html')
+	// win.loadFile('./ui/index.html')
 }
 
 app.whenReady().then(createWindow)
