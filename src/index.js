@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import './App.sass'
+import './app.sass'
+import './preload'
+import './renderer'
 
 	import Header from './components/Header'
 	import Footer from './components/Footer'

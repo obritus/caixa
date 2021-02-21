@@ -1,5 +1,4 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
-const knex = require('./db')
 
 const set_configs = () => {
 	const fs = require('fs')
@@ -30,15 +29,75 @@ const createWindow = () => {
 
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------	
-
+	
 	ipcMain.on('api', async (event, arg) => {
-		const marcas = require('./api/marcas')
-		marcas.get().then(response => {
-			event.sender.send('api-response', response)
-		}).catch(err => {
-			console.error(err)
-		})
-	})
+		const showResults = argument => {
+			const api = require(`./api/${argument.tabela}`)
+			api.get().then(response => {
+				event.sender.send('api-response', response)
+			}).catch(err => {
+				console.error(err)
+			})
+		}
+		const showResult = argument => {
+			const api = require(`./api/${argument.tabela}`)
+			api.show(argument.id).then(response => {
+				console.log('Objeto enviado do main.js', response)
+				event.sender.send('api-response', response)
+			}).catch(err => {
+				console.error(err)
+			})
+		}
+		const searchLike = argument => {
+			const api = require(`./api/${argument.tabela}`)
+			api.search(argument.like).then(response => {
+				event.sender.send('api-response', response)
+			}).catch(err => {
+				console.error(err)
+			})
+		}
+		switch (arg.tabela) {
+			case 'products':
+				if(arg.like) {
+					searchLike({ tabela: arg.tabela, like: arg.like })
+				} else if(arg.id) {
+					showResult({ tabela: arg.tabela, id: arg.id })
+				} else {
+					showResults({ tabela: arg.tabela })
+				}
+			break
+			// -----------------------------------------------------------------
+			case 'marcas':
+				if (arg.like) {
+					searchLike({ tabela: arg.tabela, like: arg.like })
+				} else if (arg.id) {
+					showResult({ tabela: arg.tabela, id: arg.id })
+				} else {
+					showResults({ tabela: arg.tabela })
+				}
+			break
+			// -----------------------------------------------------------------
+			case 'categorias':
+				if (arg.like) {
+					searchLike({ tabela: arg.tabela, like: arg.like })
+				} else if (arg.id) {
+					showResult({ tabela: arg.tabela, id: arg.id })
+				} else {
+					showResults({ tabela: arg.tabela })
+				}
+				break
+			// -----------------------------------------------------------------
+			case 'fornecedores':
+				if (arg.like) {
+					searchLike({ tabela: arg.tabela, like: arg.like })
+				} else if (arg.id) {
+					showResult({ tabela: arg.tabela, id: arg.id })
+				} else {
+					showResults({ tabela: arg.tabela })
+				}
+				break
+		}
+	}).on('sair', () => app.quit())
 
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------

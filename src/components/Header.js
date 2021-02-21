@@ -4,6 +4,7 @@ import { VscChromeMinimize, VscChromeMaximize, VscChromeClose } from 'react-icon
 import { NavLink as NavLinkRouter } from 'react-router-dom'
 import { Container, NavLink} from 'reactstrap'
 import styled from 'styled-components'
+const { ipcRenderer } = window.require('electron')
 
 export const TopHeader = styled.div`
 	height: 30px;
@@ -88,7 +89,7 @@ export default class extends React.Component {
 					<div id="buttons">
 						<button className="btn"><VscChromeMinimize /></button>
 						<button className="btn"><VscChromeMaximize /></button>
-						<button className="btn"><VscChromeClose /></button>
+						<button className="btn" onClick={ () => ipcRenderer.send('sair') }><VscChromeClose /></button>
 					</div>
 				</TopHeader>
 				<Container fluid>

@@ -1,1 +1,1 @@
-console.log(true)
+export default {}

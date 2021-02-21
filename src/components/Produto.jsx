@@ -3,11 +3,26 @@ import { Row, Col, Input } from 'reactstrap'
 
 export default props =>
 	<Row>
-		{console.log(props)}
+		{console.log("props", props)}
 		<Col>
 			<Input type="text" defaultValue={props.data.produto}/>
 		</Col>
-		<Col>{props.data.marca}</Col>
-		<Col>{props.data.categoria}</Col>
-		<Col><Input type="number" defaultValue={props.data.price} /></Col>
+		<Col>
+			<Input type="text"
+				defaultValue={`R$ ${props.data.price
+					.toString().replace(".", ',')}` }
+			/>
+		</Col>
+		<Col>
+			<Input type="text" defaultValue={props.data.categoria}/>
+		</Col>
+		<Col>
+			<Input type="text" defaultValue={props.data.marca}/>
+		</Col>
+		<Col>
+			<Input type="text" defaultValue={props.data.estoque}/>
+		</Col>
+		<Col>
+			<Input type="text" disabled defaultValue={props.data.barcode}/>
+		</Col>
 	</Row>
