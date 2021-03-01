@@ -14,7 +14,6 @@ export default class extends React.Component {
 	getProd = () => {
 		ipcRenderer.on('api-response', (event, arg) => {
 			this.setState({ api_data: arg})
-			console.log('Objeto recebido do main.js', arg)
 			this.setState({isLoading: false})
 		})
 	}
@@ -28,7 +27,7 @@ export default class extends React.Component {
 		return(
 			<Container fluid className="pt-3">
 				{	isLoading ? <h2 className="text-center">Carregando...</h2>
-					: <Produto data={api_data[0]} />
+					: <Produto data={api_data} />
 				}
 			</Container>
 		)

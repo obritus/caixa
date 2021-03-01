@@ -1,5 +1,7 @@
 {
   "name": "caixa",
+  "author": "Kaique",
+  "description": "Programa para controle de vendas e estoque. ",
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
@@ -8,9 +10,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
-    "axios": "^0.21.1",
     "bootstrap": "^5.0.0-beta1",
-    "electron": "^11.2.0",
     "knex": "^0.21.17",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
@@ -28,7 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+	"electron_win": "electron-packager . caixa.js --overwrite --platform=win32 --arch=ia32 --icon=public/favicon.ico --prune=true --out=../dist --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Caixa.js\" --ignore=\"(public|src|.vscode)\""
   },
   "eslintConfig": {
     "extends": [
@@ -47,5 +48,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "electron": "^11.3.0",
+    "electron-builder": "^22.9.1",
+    "electron-packager": "^15.2.0"
   }
 }

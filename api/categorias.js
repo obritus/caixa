@@ -3,31 +3,31 @@ const knex = require('../db')
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 
-const marcas = {
-	get: () => knex.from('marcas').select('*'),
+const categorias = {
+	get: () => knex.from('categorias').select('*'),
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 
-	post: data => knex('marcas').insert(data),
+	post: data => knex('categorias').insert(data),
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 
 	put: (id, data) => {
-		const { marca } = data
-		knex('marcas').update({ marca }).where(id)
+		const { categoria } = data
+		knex('categorias').update({ categoria }).where(id)
 	},
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 
-	delete: id => knex('marcas').del().where(id),
+	delete: id => knex('categorias').del().where(id),
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 
-	show: id => knex('marcas').where(id).first()
+	show: id => knex('categorias').where(id).first()
 }
 
-module.exports = marcas
+module.exports = categorias

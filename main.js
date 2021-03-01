@@ -20,8 +20,7 @@ const createWindow = () => {
 		transparent: true,
 		icon: __dirname + 'public/favicon.ico',
 		webPreferences: {
-			nodeIntegration: true,
-			preload: __dirname + '/src/preload.js'
+			nodeIntegration: true
 		}
 	})
 	const contents = win.webContents
@@ -51,6 +50,14 @@ const createWindow = () => {
 		const searchLike = argument => {
 			const api = require(`./api/${argument.tabela}`)
 			api.search(argument.like).then(response => {
+				event.sender.send('api-response', response)
+			}).catch(err => {
+				console.error(err)
+			})
+		}
+		const deleteApi = argument => {
+			const api = require(`./api/${argument.tabela}`)
+			api.delete(argument.id).then(response => {
 				event.sender.send('api-response', response)
 			}).catch(err => {
 				console.error(err)
@@ -103,8 +110,8 @@ const createWindow = () => {
 // -----------------------------------------------------------------------------
 
 	Menu.setApplicationMenu(null)
-	win.loadURL('http://localhost:3000/')
-	// win.loadFile('./build/index.html')
+	// win.loadURL('http://localhost:3000/')
+	win.loadFile('./build/index.html')
 	// win.loadFile('./ui/index.html')
 }
 
