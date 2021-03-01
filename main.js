@@ -33,6 +33,7 @@ const createWindow = () => {
 		const showResults = argument => {
 			const api = require(`./api/${argument.tabela}`)
 			api.get().then(response => {
+				console.log('Objeto enviado do main.js', response)
 				event.sender.send('api-response', response)
 			}).catch(err => {
 				console.error(err)
@@ -50,6 +51,7 @@ const createWindow = () => {
 		const searchLike = argument => {
 			const api = require(`./api/${argument.tabela}`)
 			api.search(argument.like).then(response => {
+				console.log('Objeto enviado do main.js', response)
 				event.sender.send('api-response', response)
 			}).catch(err => {
 				console.error(err)
